@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<meta http-equiv="X_UA-compatible" content="IE=dege,chrome=1">
+  <!--meta name="viewport" content="width=device-width" initial-scale="1"--> 
+  <meta name="viewport" content="width=device-width" initial-scale="1">
+	<title>DOM</title>
+  <link rel="stylesheet" href="css/css.css">
+	<style>
+		#ev{
+			width: 300px;
+			height: 100px;
+			background: red;
+			text-align: center;
+			line-height: 100px;
+			color: #fff;
+      transition: all 0.3s;
+		}
+	</style>
+<body>
+  <section>
+    <pre>
+/*
+$("id/class")
+*/
+function $(id){
+  if(typeof id !=='string'){
+    return null;
+  }
+  let firstStr = id.charAt(0)
+  console.log(typeof firstStr)
+  if(firstStr === "#"){
+    return document.querySelector(id);
+  }else{
+    let len = document.querySelectorAll(id).length;
+    return len == 1 ? document.querySelectorAll(id)[0] : document.querySelectorAll(id);
+  }
+}     
+    </pre>
+  </section>
+  <section>
+    <div class="checkbox">
+      <input type="checkbox">枯柘城蝇<br/>
+      <input type="checkbox">枯柘城蝇<br/>
+      <input type="checkbox">枯柘城蝇<br/>
+      <input type="checkbox">枯柘城蝇<br/>
+      <input type="checkbox">枯柘城蝇<br/>
+      <p></p>
+      <button id="all">全选</button>
+      <button id="contrary">反选</button>
+      <button id="cancel">取消选择</button>
+    </div>
+    <pre>
+// 1.获取所有复选框
+let checkbox = document.querySelector(".checkbox");
+let inputs = checkbox.querySelectorAll("input");
+//全选
+  $("#all").addEventListener("click",function(){
+    for(let i=0;i < inputs.length;i++){
+      inputs[i].checked = true;
+    }
+  })
+//反选
+$("#contrary").addEventListener("click",function() {
+  for(let i=0;i < inputs.length;i++){
+    inputs[i].checked = !inputs[i].checked;
+  }
+})
+//取消
+$("#cancel").addEventListener("click",function() {
+  for(let i=0;i < inputs.length;i++){
+    inputs[i].checked = false;
+  }
+})
+    </pre>
+  </section>
+  <section>
+    <div class="tabbox">
+      <div class="tabheader" id="tabheader">
+        <ul>
+          <li class="on">111</li>
+          <li>222</li>
+          <li>333</li>
+          <li>444</li>
+        </ul>
+      </div>
+      <div class="tabbody">
+        <ul class="show">
+          <li>1111111</li>
+        </ul>
+        <ul>
+          <li>2222222</li>
+        </ul>
+        <ul>
+          <li>3333333</li>
+        </ul>
+        <ul>
+          <li>4444444</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h3>上传图片格式验证</h3>
+    <div class="uppic">
+      <input type="file" class="filepic">
+      <div class="showpic"></div>
+    </div>
+  </section>
+
+  <div id="ev">目标事件</div>
+
+  <div id="app">
+    <input type="text" id="txt">
+    <p id="show-txt"></p>
+    <div id="jsq"></div>
+  </div>
+<script>
+/*
+$("id/class")
+*/
+function $(id){
+  if(typeof id !=='string'){
+    return null;
+  }
+  let firstStr = id.charAt(0)
+  console.log(typeof firstStr)
+  if(firstStr === "#"){
+    return document.querySelector(id);
+  }else{
+    let len = document.querySelectorAll(id).length;
+    return len == 1 ? document.querySelectorAll(id)[0] : document.querySelectorAll(id)
+  }
+  //return firstStr === "#" ? document.querySelector(id) : document.querySelectorAll(id)
+}
+/*选中 取消*/
+// 1.获取所有复选框
+let checkbox = document.querySelector(".checkbox");
+let inputs = checkbox.querySelectorAll("input[type=checkbox]");
+//全选
+  $("#all").addEventListener("click",function(){
+    for(let i=0;i<inputs.length;i++){
+      inputs[i].checked = true;
+    }
+  })
+//反选
+$("#contrary").addEventListener("click",function() {
+  for(let i=0;i<inputs.length;i++){
+    inputs[i].checked = !inputs[i].checked;
+  }
+})
+//取消
+$("#cancel").addEventListener("click",function() {
+  for(let i=0;i<inputs.length;i++){
+    inputs[i].checked = false;
+  }
+})
+/*选中 取消end*/
+
+/*tab*/
+let headLi = $(".tabheader li");
+let bodyUl = $(".tabbody ul");
+for(let i=0;i<headLi.length;i++){
+  let li = headLi[i]
+  li.addEventListener("mouseover",function(){
+    this.index = i
+    for(let j=0;j<headLi.length;j++){
+      headLi[j].className="";
+      bodyUl[j].className="";
+    }
+    this.className="on";
+    bodyUl[this.index].className="show"
+  })
+}
+/*
+上传图片格式验证
+*/
+console.log($(".uppic .filepic"))
+$(".uppic .filepic").addEventListener('change',function(){
+  //取路径 console.log(this.value)
+  let path = this.value;
+  //截取
+  let suffix = path.substr(path.lastIndexOf('.'))
+  //console.log(suffix)
+  //转小写
+  let Lower_suffix = suffix.toLowerCase()
+  //console.log(Lower_suffix)
+  //判断
+  if(Lower_suffix==='.jpg' || Lower_suffix==='.png' || Lower_suffix==='.jpeg' || Lower_suffix==='.gif'){
+    console.log("图片格式正确");
+    let showpic = this.parentNode.querySelector(".showpic");
+    // showpic.innerHTML = "<img src="+path+"/>"
+    // console.log(showpic)
+  }else{
+    console.log("图片格式不正确");
+    this.value=''
+  }
+})
+
+{
+  let ev = document.getElementById("ev");
+  ev.addEventListener("mouseover",function(){
+    setTimeout(function(){
+      ev.style.marginTop="20px"
+    },2000)
+  })
+
+}
+  var obj = {}
+  Object.defineProperty(obj, 'txt', {
+      get: function () {
+          return obj
+      },
+      set: function (newValue) {
+          document.getElementById('txt').value = newValue
+          document.getElementById('show-txt').innerHTML = newValue
+      }
+  })
+  document.addEventListener('keyup', function (e) {
+      obj.txt = e.target.value;
+     // console.log(eval(e.target.value))
+     jsStr(e.target.value)
+  })
+  function jsStr(str){
+    let lastStr = str.charAt(str.length-1);
+    console.log(lastStr);
+    if(isNaN(lastStr)){
+      let strr = str.slice(0,str.length-1);
+      console.log(strr);
+      jsStr(strr);
+    }else{
+      console.log(str)
+      //console.log(eval(str))
+      document.getElementById("jsq").innerHTML = eval(str)
+    }
+  }
+ //jsStr('1+2*3-4/2-+')
+</script>
+<script>
+  let str  = 'abcd012345ed125ss123058789k0ji6'
+function getnum(str){
+  if(typeof str === 'string'){
+    var arr = str.match(/\d{1,}/g);
+    console.log(arr)
+  }
+}
+var getNum = function (Str,isFilter) {
+　　　//用来判断是否把连续的0去掉
+        isFilter = isFilter || false;
+        if (typeof Str === "string") {
+            // var arr = Str.match(/(0\d{2,})|([1-9]\d+)/g);
+            //"/[1-9]\d{1,}/g",表示匹配1到9,一位数以上的数字(不包括一位数).
+            //"/\d{2,}/g",  表示匹配至少二个数字至多无穷位数字
+            var arr = Str.match( isFilter ? /[0-9]\d{0,}/g : /\d{1,}/g);
+            console.log(arr);
+            return arr.map(function (item) {
+                //转换为整数，
+                //但是提取出来的数字，如果是连续的多个0会被改为一个0，如000---->0，
+                //或者0开头的连续非零数字，比如015，会被改为15，这是一个坑
+                // return parseInt(item);
+                //字符串，连续的多个0也会存在，不会被去掉
+                return item;
+            });
+        } else {
+            return [];
+        }
+    }
+    console.log(getnum(str));//默认不加1，即不会把提取出来的0去掉
+</script>
+</body>
+</html>
+<!-- js -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>

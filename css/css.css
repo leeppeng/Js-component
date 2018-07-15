@@ -1,0 +1,66 @@
+*{margin: 0;padding:0;box-sizing: border-box;}
+body{
+  padding: 20px;
+}
+li{list-style: none;}
+section{
+  border:1px dotted #ddd;
+  margin-bottom: 15px;
+}
+/*checkbox 选择取消 */
+.checkbox{
+  width: 500px;
+  padding: 20px;
+  background: bisque;
+}
+.checkbox input{
+  margin-bottom: 10px;
+}
+.checkbox button{
+  border:1px solid #fff;
+  border-radius:3px;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+
+/*tab 选项卡*/
+.tabbox{
+  width: 500px;
+  height: 200px;
+  border:1px solid #999;
+}
+.tabbox .tabheader{
+  height: 40px;
+}
+.tabbox .tabheader ul {
+  display: flow-root;
+  background: #ddd;
+  display: flex;
+}
+.tabbox .tabheader ul li{
+  line-height: 40px;
+  flex-grow: 1;
+  text-align: center;
+  cursor:pointer;
+}
+.tabbox .tabheader ul li.on{
+  background: #fff;
+  color: red;
+  font-weight: bold;
+  border-left: 1px solid #999;
+  border-right: 1px solid #999;
+}
+.tabbox .tabheader ul li:first-child{
+  border-left: none;
+}
+.tabbox .tabheader ul li:last-child{
+  border-right: none;
+}
+.tabbox .tabheader ul li:hover{
+  color:red;
+}
+.show{
+  display: block!important;
+}
+.tabbody{padding:20px;}
+.tabbody ul{display:none;}
