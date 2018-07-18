@@ -7,3 +7,7 @@
 >> tab选项卡
 
 ![checkbox](img/tab.jpg)
+
+>> 上传图片格式简单验证预览
+
+![checkbox](img/imgfile.jpg)

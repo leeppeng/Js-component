@@ -102,13 +102,66 @@ $("#cancel").addEventListener("click",function() {
         </ul>
       </div>
     </div>
+     <pre>
+/*tab*/
+let headLi = $(".tabheader li");
+let bodyUl = $(".tabbody ul");
+for(let i=0;i < headLi.length;i++){
+  let li = headLi[i]
+  li.addEventListener("mouseover",function(){
+    this.index = i
+    for(let j=0;j < headLi.length;j++){
+      headLi[j].className="";
+      bodyUl[j].className="";
+    }
+    this.className="on";
+    bodyUl[this.index].className="show"
+  })
+}
+     </pre>
   </section>
   <section>
-    <h3>上传图片格式验证</h3>
+    <h3>上传图片格式简单验证预览</h3>
     <div class="uppic">
       <input type="file" class="filepic">
       <div class="showpic"></div>
     </div>
+    <pre>
+      /*
+      上传图片格式简单验证
+      */
+      $(".uppic .filepic").addEventListener('change',function(){
+        //取路径 console.log(this.value)
+        //var objUrl = getObjectURL(this.files[0]);
+        let path = this.value;
+        let suffix = path.substr(path.lastIndexOf('.')) //截取
+        //console.log(suffix)
+        let Lower_suffix = suffix.toLowerCase();//转小写
+        //console.log(Lower_suffix)
+        let showpic = this.parentNode.querySelector(".showpic");
+        //判断
+        if(Lower_suffix==='.jpg' || Lower_suffix==='.png' || Lower_suffix==='.jpeg' || Lower_suffix==='.gif'){
+          alert("图片格式正确");
+          if (window.FileReader) {
+            var reader = new FileReader();
+          } else {
+            showpic.innerHTML = "您的设备不支持图片预览功能，如需该功能请升级您的设备！";
+          }
+          var file = this.files[0];
+          reader.onload = function(e) {
+            //创建图片dom
+            let img = document.createElement("img");
+            img.src=e.target.result;
+            img.style.width = '200px';
+            showpic.appendChild(img);
+          };
+          reader.readAsDataURL(file);
+        }else{
+          alert("图片格式不正确");
+          this.value=''
+        }
+      })
+    </pre>
   </section>
 
   <div id="ev">目标事件</div>
@@ -176,29 +229,40 @@ for(let i=0;i<headLi.length;i++){
   })
 }
 /*
-上传图片格式验证
+上传图片格式验证预览
 */
-console.log($(".uppic .filepic"))
 $(".uppic .filepic").addEventListener('change',function(){
   //取路径 console.log(this.value)
+  //var objUrl = getObjectURL(this.files[0]);
   let path = this.value;
-  //截取
-  let suffix = path.substr(path.lastIndexOf('.'))
+  let suffix = path.substr(path.lastIndexOf('.')) //截取
   //console.log(suffix)
-  //转小写
-  let Lower_suffix = suffix.toLowerCase()
+  let Lower_suffix = suffix.toLowerCase();//转小写
   //console.log(Lower_suffix)
+  let showpic = this.parentNode.querySelector(".showpic");
   //判断
   if(Lower_suffix==='.jpg' || Lower_suffix==='.png' || Lower_suffix==='.jpeg' || Lower_suffix==='.gif'){
-    console.log("图片格式正确");
-    let showpic = this.parentNode.querySelector(".showpic");
-    // showpic.innerHTML = "<img src="+path+"/>"
-    // console.log(showpic)
+    alert("图片格式正确");
+    if (window.FileReader) {
+      var reader = new FileReader();
+    } else {
+      showpic.innerHTML = "您的设备不支持图片预览功能，如需该功能请升级您的设备！";
+    }
+    var file = this.files[0];
+    reader.onload = function(e) {
+      //创建图片dom
+      let img = document.createElement("img");
+      img.src=e.target.result;
+      img.style.width = '200px';
+      showpic.appendChild(img);
+    };
+    reader.readAsDataURL(file);
   }else{
-    console.log("图片格式不正确");
+    alert("图片格式不正确");
     this.value=''
   }
 })
+
 
 {
   let ev = document.getElementById("ev");
